@@ -45,40 +45,38 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                withAnimation {
-                    LazyVGrid(columns: columns) {
-                        ForEach(missions) { mission in
-                            NavigationLink {
-                                MissionView(mission: mission, astronauts: astronauts)
-                            } label: {
+                LazyVGrid(columns: columns) {
+                    ForEach(missions) { mission in
+                        NavigationLink {
+                            MissionView(mission: mission, astronauts: astronauts)
+                        } label: {
+                            VStack {
+                                Image(mission.image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                                    .padding()
                                 VStack {
-                                    Image(mission.image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100, height: 100)
-                                        .padding()
-                                    VStack {
-                                        Text(mission.displayName)
-                                            .font(.headline)
-                                            .foregroundStyle(.white)
-                                        Text(mission.formattedLaunchDate)
-                                            .font(.caption)
-                                            .foregroundStyle(.gray)
-                                    }
-                                    .padding(.vertical)
-                                    .frame(maxWidth: .infinity)
-                                    .background(.lightBackground)
+                                    Text(mission.displayName)
+                                        .font(.headline)
+                                        .foregroundStyle(.white)
+                                    Text(mission.formattedLaunchDate)
+                                        .font(.caption)
+                                        .foregroundStyle(.gray)
                                 }
-                                .clipShape(.rect(cornerRadius: 10))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.lightBackground)
-                                )
+                                .padding(.vertical)
+                                .frame(maxWidth: .infinity)
+                                .background(.lightBackground)
                             }
+                            .clipShape(.rect(cornerRadius: 10))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(.lightBackground)
+                            )
                         }
                     }
-                    .animation(.default, value: length)
                 }
+                .animation(.default, value: length)
                 .padding([.horizontal, .bottom])
             }
             .navigationTitle("Moonview")
